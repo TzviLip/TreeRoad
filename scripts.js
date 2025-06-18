@@ -64,7 +64,7 @@ setInterval(() => {
 
 		const weatherBox = document.getElementById('weather-box');
 		async function loadWeather() {
-		  const apiKey = 'c1fa28aad671cbc2eada2db184d1e07a';
+		  const apiKey = 'API-KEY';
 		  const lat = -33.951;
 		  const lon = 18.377;
 		  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
