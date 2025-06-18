@@ -19,8 +19,19 @@ document.querySelectorAll('.accordion button').forEach(btn => {
 
 // Feedback form
 const form = document.getElementById('feedback-form');
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  form.reset();
-  document.getElementById('thanks').style.display = 'block';
-});
+  form.addEventListener("submit", async e => {
+	for (let [k, v] of new FormData(e.target)) console.log(`${k}: ${v}`);
+    e.preventDefault();
+    const res = await fetch(e.target.action, {
+      method: 'POST',
+      body: new FormData(e.target),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      e.target.reset();
+      document.getElementById("thanks").style.display = "block";
+    } else {
+	console.log(await res.text());
+      alert("There was a problem.");
+    }
+  });

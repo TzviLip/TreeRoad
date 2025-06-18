@@ -117,15 +117,15 @@ nav a:hover { background:rgba(255,255,255,0.2); }
 
 /* Buttons */
 .btn-link {
-  display:inline-block;
-  margin-top:20px;
-  padding:12px 24px;
-  background:#a67c52;
-  color:#111;
-  font-weight:600;
-  border-radius:4px;
-  transition:background 0.3s;
-}
+  background: #a67c52;
+  color: #111;
+  padding: 12px 24px;
+  border: none;           /* ✅ keep these */
+  cursor: pointer;        /* ensure clickable */
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}s
 .btn-link:hover { background:#cba971; }
 
 /* Footer */
@@ -146,6 +146,7 @@ footer { text-align:center; padding:20px 0; background:#000; font-size:0.9rem; }
 }
 .panel p { margin:15px 0; }
 
+/* Styles for textarea inside ANY form under #feedback section */
 #feedback-form textarea {
   width: 100%;
   max-width: 100%;
@@ -158,4 +159,9 @@ footer { text-align:center; padding:20px 0; background:#000; font-size:0.9rem; }
   color: #eee;
   resize: vertical;
   margin-bottom: 1rem;
+}
+
+/* Style the submit button */
+#feedback-form button {
+  margin-top: 8px;
 }

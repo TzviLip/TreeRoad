@@ -123,33 +123,51 @@
 	
 	<section id="weather" class="section container">
 	  <h2>🌤 Current Weather</h2>
-	  <a class="weatherwidget-io"
-		 href="https://forecast7.com/en/33d97n18d38/camps-bay/"
-		 data-label_1="CAMPS BAY" data-label_2="WEATHER"
-		 data-theme="dark">Camps Bay Weather</a>
+	  <div id="weather-box" style="font-size: 1rem; margin-top: 10px;"></div>
 	</section>
 
 	<script>
-	!function(d,s,id){
-	  var js,fjs=d.getElementsByTagName(s)[0];
-	  if(!d.getElementById(id)){
-		js=d.createElement(s); js.id=id;
-		js.src='https://weatherwidget.io/js/widget.min.js';
-		fjs.parentNode.insertBefore(js,fjs);
+	  const weatherBox = document.getElementById('weather-box');
+
+	  async function loadWeather() {
+		const apiKey = 'c1fa28aad671cbc2eada2db184d1e07a';
+		const lat = -33.951; // Camps Bay lat
+		const lon = 18.377;  // Camps Bay lon
+		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+
+		try {
+		  const res = await fetch(url);
+		  const data = await res.json();
+		  const temp = Math.round(data.main.temp);
+		  const desc = data.weather[0].description;
+		  const icon = data.weather[0].icon;
+
+		  weatherBox.innerHTML = `
+			<img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}" style="vertical-align: middle;">
+			<span style="font-weight: bold;">${temp}°C</span> – ${desc}
+		  `;
+		} catch (err) {
+		  weatherBox.textContent = 'Unable to load weather data.';
+		}
 	  }
-	}(document,'script','weatherwidget-io-js');
+
+	  loadWeather();
 	</script>
 
 
     <!-- Feedback Form -->
-    <section id="feedback" class="section container">
-      <h2>📝 Leave Feedback</h2>
-      <form id="feedback-form" action="https://formspree.io/f/mzzgvvoe" method="POST">
-        <textarea name="message" id="feedback-message" rows="6" placeholder="Tell us how your stay was..." required></textarea>
-        <button type="submit" class="btn-link">Submit Feedback</button>
-        <p id="thanks" style="display:none; color:#a67c52; margin-top:10px;">Thank you for your feedback!</p>
-      </form>
-    </section>
+	<section id="feedback" class="section container">
+	  <h2>📝 Leave Feedback</h2>
+		<form id="feedback-form" action="https://formspree.io/f/mzzgvvoe" method="POST">
+		  <textarea name="message" id="feedback-message" rows="6" placeholder="Tell us how your stay was..." required></textarea>
+		  <button type="submit" class="btn-link">Submit Feedback</button>
+		  <p id="thanks" style="display:none; color:#a67c52; margin-top:10px;">
+			Thank you for your feedback!
+		  </p>
+		</form>
+	</section>
+	
+
 
     <!-- Contact -->
     <section id="contact" class="section container">
