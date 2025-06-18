@@ -35,3 +35,64 @@ const form = document.getElementById('feedback-form');
       alert("There was a problem.");
     }
   });
+  
+  const hero = document.querySelector('.hero');
+const images = [
+  'images/hero1.jpg',
+  'images/hero2.jpg',
+  'images/hero3.jpg',
+  'images/hero4.jpg'
+];
+
+// Create slide layers
+images.forEach((src, i) => {
+  const slide = document.createElement('div');
+  slide.classList.add('hero-slide');
+  if (i === 0) slide.classList.add('active');
+  slide.style.backgroundImage = `url('${src}')`;
+  hero.appendChild(slide);
+});
+
+let current = 0;
+const slides = document.querySelectorAll('.hero-slide');
+
+setInterval(() => {
+  slides[current].classList.remove('active');
+  current = (current + 1) % slides.length;
+  slides[current].classList.add('active');
+}, 6000);
+
+		const weatherBox = document.getElementById('weather-box');
+		async function loadWeather() {
+		  const apiKey = 'c1fa28aad671cbc2eada2db184d1e07a';
+		  const lat = -33.951;
+		  const lon = 18.377;
+		  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+
+		  try {
+			const res = await fetch(url);
+			const data = await res.json();
+			const { temp, feels_like, temp_min, temp_max, humidity } = data.main;
+			const { speed, deg } = data.wind;
+			const desc = data.weather[0].description;
+			const icon = data.weather[0].icon;
+
+			weatherBox.innerHTML = `
+			  <h3><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}"> ${Math.round(temp)}°C – ${desc}</h3>
+			  <ul>
+				<li><strong>Feels like:</strong> ${Math.round(feels_like)}°C</li>
+				<li><strong>High / Low:</strong> ${Math.round(temp_max)}°C / ${Math.round(temp_min)}°C</li>
+				<li><strong>Humidity:</strong> ${humidity}%</li>
+				<li><strong>Wind:</strong> ${Math.round(speed * 3.6)} km/h (${deg}°)</li>
+			  </ul>
+			`;
+		  } catch (err) {
+			weatherBox.textContent = 'Weather data unavailable.';
+		  }
+		}
+
+		loadWeather();
+		
+document.querySelector('.nav-toggle').addEventListener('click', () => {
+  document.querySelector('.nav-links').classList.toggle('show');
+});

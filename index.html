@@ -16,16 +16,20 @@
       <h1>Camps Bay Villa</h1>
       <p>Your on-site digital concierge</p>
     </div>
-    <nav>
-      <a href="#appliances">Appliances</a>
-      <a href="#instructions">House Info</a>
-      <a href="#parking">Parking</a>
-      <a href="#food">Food & Groceries</a>
-      <a href="#places">Places</a>
-      <a href="#faq">FAQ</a>
-      <a href="#feedback">Feedback</a>
-      <a href="#contact">Contact</a>
-    </nav>
+	<nav class="navbar">
+	  <button class="nav-toggle" aria-label="toggle menu">☰</button>
+	  <ul class="nav-links">
+		<li><a href="#appliances">Appliances</a></li>
+		<li><a href="#instructions">House Info</a></li>
+		<li><a href="#parking">Parking</a></li>
+		<li><a href="#food">Food</a></li>
+		<li><a href="#places">Places</a></li>
+		<li><a href="#faq">FAQ</a></li>
+		<li><a href="#feedback">Feedback</a></li>
+		<li><a href="#weather">Weather</a></li>
+		<li><a href="#contact">Contact</a></li>
+	  </ul>
+	</nav>
   </header>
 
   <!-- Appliances -->
@@ -103,6 +107,15 @@
           <img src="images/cafe-caprice.jpg" alt="Café Caprice">
           <div class="overlay">Café Caprice – Sunset Cocktails</div>
         </a>
+		<a href="https://goo.gl/maps/HUhK4a9xHR1ZqCna7" target="_blank" class="grid-item">
+		  <img src="images/pipe-track.jpg" alt="Pipe Track Trail">
+		  <div class="overlay">Pipe Track – Morning Hike with Views</div>
+		</a>
+		<a href="https://goo.gl/maps/sbQ6vZy9DhgHZ86q7" target="_blank" class="grid-item">
+		  <img src="images/zeitz.jpg" alt="Zeitz MOCAA">
+		  <div class="overlay">Zeitz MOCAA – Art in a Silo</div>
+		</a>
+
       </div>
     </section>
 
@@ -125,34 +138,6 @@
 	  <h2>🌤 Current Weather</h2>
 	  <div id="weather-box" style="font-size: 1rem; margin-top: 10px;"></div>
 	</section>
-
-	<script>
-	  const weatherBox = document.getElementById('weather-box');
-
-	  async function loadWeather() {
-		const apiKey = 'c1fa28aad671cbc2eada2db184d1e07a';
-		const lat = -33.951; // Camps Bay lat
-		const lon = 18.377;  // Camps Bay lon
-		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
-
-		try {
-		  const res = await fetch(url);
-		  const data = await res.json();
-		  const temp = Math.round(data.main.temp);
-		  const desc = data.weather[0].description;
-		  const icon = data.weather[0].icon;
-
-		  weatherBox.innerHTML = `
-			<img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}" style="vertical-align: middle;">
-			<span style="font-weight: bold;">${temp}°C</span> – ${desc}
-		  `;
-		} catch (err) {
-		  weatherBox.textContent = 'Unable to load weather data.';
-		}
-	  }
-
-	  loadWeather();
-	</script>
 
 
     <!-- Feedback Form -->
