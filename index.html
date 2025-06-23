@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Camps Bay Villa Guide</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Camps Bay Villa Guide</title>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css"/>
+	<!-- Leaflet CSS -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-
-  <!-- Hero -->
-  <header class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-text">
-      <h1>Upper Tree Road Villa</h1>
-      <p>Your on-site digital concierge</p>
-    </div>
 	<nav class="navbar">
 	  <button class="nav-toggle" aria-label="toggle menu">☰</button>
 	  <ul class="nav-links">
@@ -30,12 +24,19 @@
 		<li><a href="#contact">Contact</a></li>
 	  </ul>
 	</nav>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <h1>Camps Bay Villa</h1>
+      <p>Your on-site digital concierge</p>
+    </div>
   </header>
 
   <!-- Appliances -->
   <main>
     <section id="appliances" class="section container">
-      <h2>🔌 Appliances</h2>
+      <h2>Appliances</h2>
       <div class="cards">
         <div class="card">
           <img src="images/coffee.jpg" alt="Coffee Machine">
@@ -57,7 +58,7 @@
 
     <!-- House Info -->
     <section id="instructions" class="section container">
-      <h2>📘 House Info</h2>
+      <h2>House Info</h2>
       <ul class="info-list">
         <li><strong>Wi‑Fi:</strong> <code>AirbnbGuest</code> / <code>CapeBay123</code></li>
         <li><strong>Heating/Cooling:</strong> Use the wall unit: "+" to warm, "–" to cool.</li>
@@ -68,7 +69,7 @@
 
     <!-- Parking & Check-In -->
     <section id="parking" class="section container">
-      <h2>🚗 Parking & Check‑In</h2>
+      <h2>Parking & Check‑In</h2>
       <p>Parking in driveway (2 cars). Street parking on Dunluce Road is free after 6 PM and all day Sunday.</p>
       <h3>Access & Keys</h3>
       <div class="access">
@@ -79,7 +80,7 @@
 
     <!-- Food & Groceries -->
     <section id="food" class="section container">
-      <h2>🍱 Food Delivery & Groceries</h2>
+      <h2>Food Delivery & Groceries</h2>
       <ul class="info-list">
         <li><strong>Pick n Pay & Checkers:</strong> 5 min drive; available via Uber Eats.</li>
         <li><strong>Local delivery:</strong> Mr D Food, Bolt Food, Uber Eats (search “Camps Bay”).</li>
@@ -89,7 +90,7 @@
 
     <!-- Local Places -->
     <section id="places" class="section container">
-      <h2>🗺 Local Favorites</h2>
+      <h2>Local Favorites</h2>
       <div class="grid-gallery">
         <a href="https://goo.gl/maps/8Eno8ZT9vWNBzWRz6" target="_blank" class="grid-item">
           <img src="images/campsbay-beach.jpg" alt="Camps Bay Beach">
@@ -118,10 +119,16 @@
 
       </div>
     </section>
+	
+	<section id="map" class="section container">
+	  <h2>Explore Camps Bay</h2>
+	  <div id="leaflet-map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
+	</section>
+
 
     <!-- FAQ Accordion -->
     <section id="faq" class="section container">
-      <h2>❓ FAQs</h2>
+      <h2>FAQs</h2>
       <div class="accordion">
         <button aria-expanded="false">Extra towels or pillows?</button>
         <div class="panel"><p>Yes! You’ll find extras in the linen closet. Text host for more.</p></div>
@@ -134,15 +141,20 @@
       </div>
     </section>
 	
+	<!-- Weather -->
 	<section id="weather" class="section container">
-	  <h2>🌤 Current Weather</h2>
-	  <div id="weather-box" style="font-size: 1rem; margin-top: 10px;"></div>
+		<h2>Camps Bay Weather</h2>
+		<a class="weatherwidget-io"
+			href="https://forecast7.com/en/n33d9518d38/camps-bay/"
+			data-label_1="CAMPS BAY"
+			data-label_2="WEATHER"
+			data-theme="weather_one">Camps Bay Weather</a>
 	</section>
 
 
     <!-- Feedback Form -->
 	<section id="feedback" class="section container">
-	  <h2>📝 Leave Feedback</h2>
+	  <h2>Leave Feedback</h2>
 		<form id="feedback-form" action="https://formspree.io/f/mzzgvvoe" method="POST">
 		  <textarea name="message" id="feedback-message" rows="6" placeholder="Tell us how your stay was..." required></textarea>
 		  <button type="submit" class="btn-link">Submit Feedback</button>
@@ -156,18 +168,20 @@
 
     <!-- Contact -->
     <section id="contact" class="section container">
-      <h2>📞 Contact & Support</h2>
+      <h2>Contact & Support</h2>
       <p><strong>Host: Jane Doe</strong> – <a href="tel:+27811234567">+27 81 123 4567</a></p>
       <p><strong>Emergency:</strong> 112 / 10111 (SA)</p>
       <p><a href="Guest-Guide.pdf" class="btn-link">Download Local Guide (PDF)</a></p>
     </section>
-  </main>
+	</main>
 
-  <!-- Footer -->
-  <footer>
-    <p>Enjoy your stay in Camps Bay Villa 🖤</p>
-  </footer>
+	<!-- Footer -->
+	<footer>
+		<p>Enjoy your stay in Camps Bay Villa 🖤</p>
+	</footer>
 
-  <script src="scripts.js"></script>
+	<!-- Leaflet JS (before closing </body>) -->
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+	<script src="scripts.js"></script>
 </body>
 </html>

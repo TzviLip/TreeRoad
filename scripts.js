@@ -7,6 +7,15 @@ document.querySelectorAll('nav a').forEach(link => {
   });
 });
 
+// Collapse mobile nav when a link is clicked
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    const nav = document.querySelector('.nav-links');
+    nav.classList.remove('show');
+    document.body.style.overflow = ''; // re-enable scroll
+  });
+});
+
 // FAQ accordion
 document.querySelectorAll('.accordion button').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -56,43 +65,48 @@ images.forEach((src, i) => {
 let current = 0;
 const slides = document.querySelectorAll('.hero-slide');
 
-setInterval(() => {
-  slides[current].classList.remove('active');
-  current = (current + 1) % slides.length;
-  slides[current].classList.add('active');
-}, 6000);
+//Weather
+!function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0];
+  if(!d.getElementById(id)){
+    js=d.createElement(s); js.id=id;
+    js.src='https://weatherwidget.io/js/widget.min.js';
+    fjs.parentNode.insertBefore(js,fjs);
+  }
+}(document,'script','weatherwidget-io-js');	
 
-		const weatherBox = document.getElementById('weather-box');
-		async function loadWeather() {
-		  const apiKey = 'API-KEY';
-		  const lat = -33.951;
-		  const lon = 18.377;
-		  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+const toggle = document.querySelector('.nav-toggle');
+const links = document.querySelector('.nav-links');
 
-		  try {
-			const res = await fetch(url);
-			const data = await res.json();
-			const { temp, feels_like, temp_min, temp_max, humidity } = data.main;
-			const { speed, deg } = data.wind;
-			const desc = data.weather[0].description;
-			const icon = data.weather[0].icon;
-
-			weatherBox.innerHTML = `
-			  <h3><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}"> ${Math.round(temp)}°C – ${desc}</h3>
-			  <ul>
-				<li><strong>Feels like:</strong> ${Math.round(feels_like)}°C</li>
-				<li><strong>High / Low:</strong> ${Math.round(temp_max)}°C / ${Math.round(temp_min)}°C</li>
-				<li><strong>Humidity:</strong> ${humidity}%</li>
-				<li><strong>Wind:</strong> ${Math.round(speed * 3.6)} km/h (${deg}°)</li>
-			  </ul>
-			`;
-		  } catch (err) {
-			weatherBox.textContent = 'Weather data unavailable.';
-		  }
-		}
-
-		loadWeather();
-		
-document.querySelector('.nav-toggle').addEventListener('click', () => {
-  document.querySelector('.nav-links').classList.toggle('show');
+toggle.addEventListener('click', () => {
+  links.classList.toggle('show');
+  document.body.style.overflow = links.classList.contains('show') ? 'hidden' : '';
 });
+
+
+// Map
+function initLeafletMap() {
+  const map = L.map('leaflet-map').setView([-33.951, 18.377], 14);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const locations = [
+    { name: 'Your Airbnb', lat: -33.951, lng: 18.377 },
+    { name: 'Camps Bay Beach', lat: -33.953, lng: 18.377 },
+    { name: 'Café Caprice', lat: -33.956, lng: 18.403 },
+    { name: 'Table Mountain Cable Car', lat: -33.948, lng: 18.403 },
+    { name: 'Theatre on the Bay', lat: -33.9518, lng: 18.378 },
+    { name: 'Zeitz MOCAA', lat: -33.907, lng: 18.420 }
+  ];
+
+  locations.forEach(loc => {
+    L.marker([loc.lat, loc.lng])
+      .addTo(map)
+      .bindPopup(`<strong>${loc.name}</strong>`);
+  });
+}
+
+// Wait until DOM is fully loaded
+document.addEventListener('DOMContentLoaded', initLeafletMap);
